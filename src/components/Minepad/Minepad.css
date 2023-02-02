@@ -1,0 +1,56 @@
+.Minepad {
+  width: 85%;
+}
+.Minepad__head {
+  width: 80%;
+  padding: 4rem;
+}
+.Minepad__head h2 {
+  font-size: 2.5rem;
+  color: var(--primary-color);
+  padding-bottom: 1rem;
+  font-family: var(--font-family);
+  padding: 0.5rem 1.5rem 0 0;
+  background: #636363;
+  color: transparent;
+  text-shadow: rgba(245, 245, 245, 0.4) 3px 5px 1px;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text;
+}
+.Minepad__head p {
+  color: var(--primary-color);
+  font-family: var(--font-family);
+}
+.Minepad__left {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+.Minepad__img {
+  width: 100%;
+  margin-left: 6rem;
+}
+.Minepad__img img {
+  padding: 1rem;
+}
+.Minepad__right {
+  padding-top: 1rem;
+  width: 100%;
+}
+.Minepad__right1 {
+  width: 100%;
+}
+
+.Minepad__right2 {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.Minepad__button {
+  background-color: transparent;
+  border-radius: var(--border-radius);
+  border: var(--border);
+  color: var(--primary-color);
+  padding: 10px;
+  box-shadow: var(--box-shadow);
+}

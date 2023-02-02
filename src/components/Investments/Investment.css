@@ -1,0 +1,82 @@
+.investment__head {
+  width: 85%;
+  padding-top: 3rem;
+  padding-bottom: 2rem;
+  margin-bottom: 0.2rem;
+}
+.investment {
+  padding-left: 3rem;
+}
+
+.investment__ul {
+  width: 70%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--primary-color);
+  padding-left: 3rem;
+}
+
+.wallet,
+.daily__profit {
+  color: var(--primary-color);
+  padding-left: 3rem;
+  padding-bottom: 3rem;
+  border-bottom: var(--border);
+}
+
+.no-border {
+  border: none;
+  text-decoration: none;
+  color: var(--primary-color);
+  text-transform: uppercase;
+  background-color: transparent;
+}
+.no-border:active {
+  border-bottom: 2px solid blue;
+}
+.no-border:focus {
+  border-bottom: 2px solid rgb(2, 20, 124);
+}
+
+.daily__profit {
+  padding-top: 2rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.rxlap {
+  font-size: 1.1rem;
+  justify-content: center;
+  align-items: center;
+}
+.statistic,
+.ReferralMenu {
+  width: 90%;
+  padding-left: 5rem;
+  padding-bottom: 5rem;
+}
+.statistic__wallet {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+.tokenvesting {
+  width: 90%;
+  padding-left: 5rem;
+  padding-bottom: 5rem;
+}
+.token {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+.token > span {
+  border: var(--border);
+  color: var(--primary-color);
+  padding: 1rem;
+  background-color: rgb(200, 225, 223);
+}
+.ReferralMenu__wallet {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}

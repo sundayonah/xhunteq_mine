@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { TransactionContext } from "../ReactContext/TransactionContext";
+import { Spinner } from "../Spinner";
 import "./DepositForm.css";
 
 const DepositForm = () => {
@@ -11,10 +12,13 @@ const DepositForm = () => {
     setDepositAmount,
     depositAddress,
     depositAmount,
-    handleDeposit,
+    HandleDeposit,
     maxDeposit,
     minDeposit,
     Approved,
+    CheckAlready,
+    Invest,
+    isLoading,
   } = useContext(TransactionContext);
   const handleShowModal = () => {
     setShowModal(true);
@@ -34,7 +38,7 @@ const DepositForm = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    handleDeposit();
+    HandleDeposit();
 
     // Call the deposit function here and pass the `address` and `amount` as arguments
     // Make sure to check if the `amount` is between the minimum and maximum values before calling the function
@@ -46,7 +50,7 @@ const DepositForm = () => {
 
     // if (depositAmount >= minDeposit && depositAmount <= maxDeposit) {
     //   // Call the deposit function here
-    //   handleDeposit();
+    //   HandleDeposit();
     // } else {
     //   console.error("Amount must be between the minimum and maximum values");
     // }
@@ -54,9 +58,23 @@ const DepositForm = () => {
 
   return (
     <div>
-      <button onClick={handleShowModal} className="the__buttons">
-        Deposit
-      </button>
+      <div>
+        {CheckAlready === Invest() ? (
+          <button onClick={handleShowModal} className="the__buttons">
+            Deposit
+          </button>
+        ) : (
+          <>
+            {isLoading ? (
+              <Spinner />
+            ) : (
+              <button className="the__buttons" onClick={() => Approved()}>
+                Approve
+              </button>
+            )}
+          </>
+        )}
+      </div>
       {/* <button onClick={handleShowModal} className="the__buttons">
         Approve
       </button> */}
@@ -95,7 +113,7 @@ const DepositForm = () => {
               {/* <button onClick={handleCloseModal}>Close</button> */}
               <button
                 className="the__modalbutton"
-                onClick={() => handleDeposit()}
+                onClick={() => HandleDeposit()}
               >
                 Deposit Fund
               </button>

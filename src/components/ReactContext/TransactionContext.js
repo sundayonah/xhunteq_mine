@@ -38,31 +38,30 @@ export const TransactionProvider = ({ children }) => {
       } catch (error) {}
   };
 
-  //investment
-  useEffect(() => {
-    const Invest = async () => {
-      try {
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
-        const signer = provider.getSigner();
-        const profile = new ethers.Contract(routerAddress, routerAbi, signer);
-        const investArray = await profile.investments(currentAccount);
-        // Check if the array has a valid value, otherwise set to 0
-        let invest = ethers.constants.Zero;
-        if (investArray.length >= 1) {
-          invest = investArray[0];
-        }
-        // Format the invest value as a string
-        const maxInvest = ethers.utils.formatUnits(invest, "wei");
-        const Tinvest = maxInvest.toLocaleString();
-        setTotalInvest(Tinvest);
-        console.log(Tinvest, "total investments");
-      } catch (error) {
-        console.error(error);
+  // investment
+  const Invest = async () => {
+    try {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      const profile = new ethers.Contract(routerAddress, routerAbi, signer);
+      const investArray = await profile.investments(currentAccount);
+      // Check if the array has a valid value, otherwise set to 0
+      let invest = ethers.constants.Zero;
+      if (investArray.length >= 1) {
+        invest = investArray[0];
       }
-    };
-
-    Invest();
-  }, [currentAccount]);
+      // Format the invest value as a string
+      const maxInvest = ethers.utils.formatUnits(invest, "wei");
+      const Tinvest = maxInvest.toLocaleString();
+      setTotalInvest(Tinvest);
+      console.log(Tinvest, "total investments");
+    } catch (error) {
+      console.error(error);
+    }
+    // useEffect(() => {
+    //   Invest();
+    // }, [currentAccount]);
+  };
 
   // function balanceOf(address account) external view returns (uint256);
 
@@ -148,7 +147,8 @@ export const TransactionProvider = ({ children }) => {
   }, []);
 
   //Deposit f(x)
-  const handleDeposit = async () => {
+
+  const HandleDeposit = async () => {
     try {
       const minDeposit = ethers.utils.parseUnits("50", "ether");
       const maxDeposit = ethers.utils.parseUnits("20000", "ether");
@@ -163,15 +163,19 @@ export const TransactionProvider = ({ children }) => {
         console.error("Amount must be between the minimum and maximum values");
         return;
       }
-
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
       const profile = new ethers.Contract(routerAddress, routerAbi, signer);
-
       await profile.deposit(depositAddress, depositAmount, {
         gasLimit: 51000,
         gasPrice: ethers.utils.parseUnits("10.0", "gwei"),
       });
+      const CHECK = profile.checkAlready();
+      if (!CHECK()) {
+        HandleDeposit();
+      } else {
+        Approved();
+      }
 
       console.log("Deposit successful!");
     } catch (error) {
@@ -179,7 +183,31 @@ export const TransactionProvider = ({ children }) => {
     }
   };
 
-  // const handleDeposit = async () => {
+  //CHECKALREADY
+  const CheckAlready = () => {
+    const [hasInvested, setHasInvested] = useState(false);
+
+    useEffect(() => {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      const profile = new ethers.Contract(routerAddress, routerAbi, signer);
+      profile.methods
+        .checkAlready()
+        .call()
+        .then((result) => {
+          setHasInvested(result);
+          if (!result) {
+            Invest();
+            console.log(hasInvested, "i have invested");
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }, [hasInvested]);
+  };
+
+  // const HandleDeposit = async () => {
   //   try {
   //     const provider = new ethers.providers.Web3Provider(window.ethereum);
   //     const signer = provider.getSigner();
@@ -207,9 +235,10 @@ export const TransactionProvider = ({ children }) => {
       const tx = await profile.approve(currentAccount, value, {
         gasLimit: 61000,
       });
-      if (tx.status === 1) {
-        console.log(tx, "congratulation");
-      }
+      console.log(tx, profile, "TRANSACTION");
+      // if (tx.status === 1) {
+      //   console.log(tx, "congratulation");
+      // }
       setCongrat(true);
     } catch (error) {
       console.error(error);
@@ -217,6 +246,7 @@ export const TransactionProvider = ({ children }) => {
     }
     setIsLoading(false);
   };
+
   //_ROI
   useEffect(() => {
     const dailyroi = async () => {
@@ -249,7 +279,7 @@ export const TransactionProvider = ({ children }) => {
         maximum,
         roi,
         walletBalance,
-        handleDeposit,
+        HandleDeposit,
         setDepositAddress,
         setDepositAmount,
         depositAddress,
@@ -257,6 +287,8 @@ export const TransactionProvider = ({ children }) => {
         minDeposit, // max,
         maxDeposit,
         totalInvest,
+        CheckAlready,
+        Invest,
       }}
     >
       {children}

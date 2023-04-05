@@ -1,13 +1,18 @@
 import React, { useContext } from "react";
 import "./Header.css";
 import { FiSun } from "react-icons/fi";
+
 import { RxDragHandleDots2 } from "react-icons/rx";
 import { MdCastConnected } from "react-icons/md";
 import { TransactionContext } from "../ReactContext/TransactionContext";
+import ChainAnex from "../Minepad/ChainAnex";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import ConnectWallets from "../Header/connectWallet/ConnetWallets";
 
-const Header = () => {
-  const { connectWallet, currentAccount, isLoading } =
+export const Header = () => {
+  const { connectWallet, currentAccount, isLoading, accountBal, address } =
     useContext(TransactionContext);
+
   return (
     <div className="Header">
       <div className="Header__left">
@@ -36,22 +41,26 @@ const Header = () => {
         {/* //Connect metamsk, and otherothers...........................*/}
 
         {currentAccount ? (
-          <button
-          // onClick={() => connectWallet()}
-          >
-            Connected <MdCastConnected />
+          <button className="connect" onClick={() => connectWallet()}>
+            <h4> {accountBal} BNB </h4>
+            <h4 className="address"> {address}</h4>
+            {/* <MdCastConnected /> */}
           </button>
         ) : (
           <button onClick={() => connectWallet()}>
             Connect WAllet <MdCastConnected />
+            {/* <ConnectWallets />; */}
           </button>
         )}
 
         <RxDragHandleDots2 className="imconnect" />
         <FiSun className="fisun" />
       </div>
+      {/* <Router>
+        <Routes>
+          <Route path="chainanex" element={<ChainAnex />} />
+        </Routes>
+      </Router> */}
     </div>
   );
 };
-
-export default Header;

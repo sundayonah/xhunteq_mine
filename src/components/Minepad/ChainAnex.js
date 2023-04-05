@@ -1,9 +1,12 @@
 import React from "react";
+import { Route } from "react-router-dom";
 const ChainAnex = () => {
   return (
     <div>
-      ChainAnex icons that yowhich utilizes ES6 imports that allows you to
-      include only the icons that your project is using.
+      <div>
+        <h1>Example Page</h1>
+        <p>This is an example page.</p>
+      </div>
     </div>
   );
 };

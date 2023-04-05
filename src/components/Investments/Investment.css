@@ -31,6 +31,7 @@
   color: var(--primary-color);
   text-transform: uppercase;
   background-color: transparent;
+  padding: 1rem 2rem;
 }
 .no-border:active {
   border-bottom: 2px solid blue;

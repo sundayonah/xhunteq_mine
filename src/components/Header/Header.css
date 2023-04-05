@@ -23,7 +23,7 @@
 }
 .header__logo h2 {
   font-size: 2rem;
-  padding: 0.5rem 1.5rem 0 0;
+  padding: 0.5rem 1.5rem 0 2rem;
   background: #636363;
   color: transparent;
   text-shadow: rgba(245, 245, 245, 0.4) 3px 5px 1px;
@@ -52,6 +52,19 @@
 }
 
 /* .............HEADER RIGHT............ */
+.connect {
+  display: flex;
+}
+
+.connect h4 {
+  padding: 3px;
+}
+
+.address {
+  background-color: rgb(64, 62, 62);
+  border-radius: 0.2rem;
+  border: var(--border);
+}
 
 .Header__right {
   display: flex;

@@ -47,9 +47,9 @@ span {
   border-radius: var(--border-radius);
   border: var(--border);
   color: var(--primary-color);
-  padding: 10px;
+  padding: 10px 3rem;
   margin-top: 3rem;
-  box-shadow: var(--box-shadow);
+  box-shadow: var(--box-shadow); 
   cursor: pointer;
 }
 .the__buttons:hover {

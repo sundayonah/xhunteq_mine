@@ -19,6 +19,8 @@ const DepositForm = () => {
     CheckAlready,
     Invest,
     isLoading,
+    error,
+    isApproved,
   } = useContext(TransactionContext);
   const handleShowModal = () => {
     setShowModal(true);
@@ -59,7 +61,7 @@ const DepositForm = () => {
   return (
     <div>
       <div>
-        {CheckAlready === Invest() ? (
+        {isApproved ? (
           <button onClick={handleShowModal} className="the__buttons">
             Deposit
           </button>
@@ -101,11 +103,19 @@ const DepositForm = () => {
                 <label className="inputLabel">
                   <h3>Amount</h3>
                   <input
+                    style={{
+                      border: error ? "1px solid red" : "1px solid #ccc",
+                    }}
                     type="text"
                     placeholder="Amount"
                     value={depositAmount}
                     onChange={handleAmountChange}
                   />
+                  {error && (
+                    <div style={{ color: "red", fontSize: "10px" }}>
+                      Invalid Amount!
+                    </div>
+                  )}
                 </label>
               </form>
             </div>

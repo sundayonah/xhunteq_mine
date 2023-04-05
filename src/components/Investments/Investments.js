@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Investment.css";
 import { RxLapTimer } from "react-icons/rx";
@@ -48,21 +48,23 @@ export default Investments;
 
 export const Investment = () => {
   const {
-    connectWallet,
-    currentAccount,
-    Approved,
-    isLoading,
-    congrat,
-    handleDeposit,
     walletBalance,
     totalInvest,
+    dailyRoiAmount,
+    ClaimDailyRewards,
+    claimTime,
+    rewardPool,
+    time,
+    Withdrawal,
+    deadlineTimestamp,
+    nextWithdrawal,
   } = useContext(TransactionContext);
 
   return (
     <div className="investment">
       <div className="wallet">
         <span>
-          <h3>Wallet Balance</h3>
+          <h3>Wallet Balances</h3>
           <p>{walletBalance} BUSD</p>
         </span>
         <span>
@@ -87,22 +89,28 @@ export const Investment = () => {
       <div className="daily__profit">
         <span>
           <h3>Daily ROI Amount</h3>
-          <p>NAN/0 BUSD</p>
-          <button className="the__buttons">MINE NOW</button>
+          <p>{dailyRoiAmount} BUSD</p>
+          <button className="the__buttons" onClick={() => ClaimDailyRewards()}>
+            MINE NOW
+          </button>
           <p>
             <RxLapTimer className="rxlap" />
-            Next Mine Time:
+            Next Mine Time:{time}
+            {/* Next Mine Time: {claimTime ? formatTime(claimTime) : "--"} */}
           </p>
         </span>
         <span>
           <h3>Profit Pool</h3>
           <p>0 BUSD</p>
-          <button className="the__buttons">Withdraw Profit</button>
+          <button className="the__buttons" onClick={() => Withdrawal()}>
+            Withdraw Profit
+          </button>
           <p>
             <RxLapTimer className="rxlap" />
-            {"  "}
-            Next Withdraw Time: (Only 25% of profits allowable):
+            Next Withdraw Time: {nextWithdrawal} (Only 25% of profits
+            allowable):
           </p>
+          <p>{deadlineTimestamp}</p>
         </span>
       </div>
     </div>
@@ -115,24 +123,33 @@ export const Investment = () => {
 // };
 //statistics.....................
 export const Statistics = () => {
+  const {
+    walletBalance,
+    totalDeposit,
+    roi,
+    userReward,
+    profitAmount,
+    totalReward,
+    withDrawFee,
+  } = useContext(TransactionContext);
   return (
     <div className="statistic">
       <div className="statistic__wallet">
         <span>
           <h3>Wallet Balance</h3>
-          <p> NaN BUSD</p>
+          <p>{walletBalance} BUSD</p>
         </span>
         <span>
           <h3>Total Profit Collection</h3>
-          <p>BUSD</p>
+          <p>{userReward} BUSD</p>
         </span>
         <span>
           <h3>3X Profit Amount</h3>
-          <p>NaN BUSD</p>
+          <p> {profitAmount} BUSD</p>
         </span>
         <span>
           <h3>3X Profit Remaining</h3>
-          <p>NaN BUSD</p>
+          <p>{totalReward} BUSD</p>
         </span>
       </div>
       <div className="statistic__wallet">
@@ -150,7 +167,7 @@ export const Statistics = () => {
         </span>
         <span>
           <h3>Withdrawal Fee</h3>
-          <p>0</p>
+          <p>{withDrawFee}</p>
         </span>
       </div>
       <div className="statistic__wallet">
@@ -160,7 +177,7 @@ export const Statistics = () => {
         </span>
         <span>
           <h3>Total BUSD Deposited</h3>
-          <p>BUSD</p>
+          <p>{totalDeposit} BUSD</p>
         </span>
         <span>
           <h3>Listing Price</h3>
@@ -197,7 +214,7 @@ export const ReferralMenu = () => {
       </p>
       <div className="ReferralMenu__wallet">
         <span>
-          <h3>Total Withdrawal</h3>
+          <h3>Available Amount Earned on Referrals</h3>
           <p> 0 BUSD</p>
         </span>
         <span>

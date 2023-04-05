@@ -126,9 +126,7 @@ library SafeMath {
             return a / b;
         }
     }
-
 }
-
 abstract contract Context {
     function _msgSender() internal view virtual returns (address) {
         return msg.sender;
@@ -506,7 +504,8 @@ contract UnctionBUSD is Context, Ownable , ReentrancyGuard, Events {
     }
 
 
-    function withdrawal() external noReentrant {
+    function withdrawal() external noReentrant{
+        
         require(init, "Not Started Yet");    
         require(weekly[msg.sender].deadline <= block.timestamp, "You cant withdraw");
         require(totalRewards[msg.sender].amount <= SafeMath.mul(investments[msg.sender].invested,3), "You cant withdraw you have collected three times Already"); // hh new
